@@ -16,6 +16,13 @@ import javax.xml.stream.XMLStreamReader;
 public class MyUtil {
     private static Grafo g;
     
+    /**
+     * Funzione che da XML ritorna un grafo con nodi tensore
+     * @param fileName, nome del file
+     * @return g, Grafo estrapolato dall'XML
+     * @throws FileNotFoundException
+     * @throws XMLStreamException
+     */
     public static Grafo getGrafoDaXML(String fileName) throws FileNotFoundException, XMLStreamException {
         File file = new File(fileName);
         if(!file.exists()) {
@@ -29,10 +36,8 @@ public class MyUtil {
         NodoTensore root = null;
         Matrice mTemp = null;
         Tensore tTemp = null;
-        int[][] vTemp = null;
         int i = -1, j = -1;
         String dati = "";
-        ArrayList<Tensore> tensori = null;
         while(reader.hasNext() || root == null) {
             int type = 0;
             try {
@@ -50,25 +55,37 @@ public class MyUtil {
                     if("TTree".equals(reader.getLocalName()))
                         g = new Grafo();
                     else if("TensorNode".equals(reader.getLocalName())) {
+                        // Se nTemp è null significa che è la prima volta che viene letto un TensorNode
                         if(nTemp == null)
                             nTemp = new NodoTensore();
                         else {
+                            // Se isEmpty vuol dire che nTemp è la radice e quindi è da aggiungere
                             if(nodi.isEmpty()) {
                                 nTemp.setRoot(true);
                                 nodi.add(nTemp);
                                 root = nTemp;
                             }
                             else {
+                                /**
+                                 * Cerco il primo nodo ancora aperto e gli aggiungo come figlio il 
+                                 * nodo corrente
+                                 */
                                 int indice = -1;
                                 for(int c = nodi.size() - 1; c >= 0 && indice == -1; c--) {
                                     if(nodi.get(c).isAperto())
                                         indice = c;
                                 }
+                                /**
+                                 * Se non è stato trovato alcun nodo l'albero è finito
+                                 * altrimenti aggiungo all'ultimo nodo aperto il figlio
+                                 */
                                 if(indice != -1)
                                     nodi.get(indice).addFiglio(nTemp);
+                                // Aggiungo il nuovo nodo alla lista dei nodi
                                 nodi.add(nTemp);
                             }
                             nTemp = new NodoTensore();
+                            // Apro il nodo
                             nTemp.apri();
                         }
                     }
@@ -101,10 +118,12 @@ public class MyUtil {
                         nTemp.addTensore(tTemp);
                     }
                     else if("TensorNode".equals(reader.getLocalName())) {
+                        // Se il nodo corrente è aperto lo chiudo
                         if(nTemp.isAperto()) {
                             nTemp.chiudi();
                             nTemp.setFoglia(true);
                         }
+                        // Altrimenti chiudo l'ultimo aperto
                         else {
                             int indice = -1;
                                 for(int c = nodi.size() - 1; c >= 0 && indice == -1; c--) {
@@ -128,6 +147,10 @@ public class MyUtil {
         return g;
     }
 
+    /**
+     * Inutile
+     * @return null
+     */
     private static NodoTensore funzioneTroppoPowaPerComuniMortali() {
         return null;
     }

@@ -8,8 +8,16 @@ import javax.xml.stream.XMLStreamException;
 import myutil.MyUtil;
 import myutil.SuperTimer;
 
+/**
+ *
+ * @author franc
+ */
 public class IEEETestQuasiFinale {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Grafo g = null;
         try {
@@ -34,8 +42,9 @@ public class IEEETestQuasiFinale {
         System.out.println("Con Sarrus");
         somma = 0;
         st = new SuperTimer();
-        for(Matrice m: ms)
+        for(Matrice m: ms) {
             somma += m.calcolaDeterminante();
+        }
         tempuscolo = st.getTempuscolo();
         System.out.println("Tempuscolo: " + tempuscolo + " Somma: " + somma);
         

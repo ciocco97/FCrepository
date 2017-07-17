@@ -29,9 +29,17 @@ public class NodoTensore {
         this.figli = figli;
         this.aperto = aperto;
     }
+
+    public void setTensori(ArrayList<Tensore> tensori) {
+        this.tensori = tensori;
+    }
     
     public void addTensore(Tensore t) {
-        
+        tensori.add(t);
+    }
+    
+    public void addFiglio(NodoTensore n) {
+        figli.add(n);
     }
     
     public String getNome() {
@@ -45,9 +53,28 @@ public class NodoTensore {
     public void chiudi() {
         aperto = false;
     }
+    
+    public void setFoglia(boolean b) {
+        foglia = b;
+    }
+    
+    public void setRoot(boolean b) {
+        radice = b;
+    }
+    
+    public boolean isAperto() {
+        return aperto;
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    @Override
+    public String toString() {
+        String s = "";
+        s += nome + " Root: " + radice + " Foglia: " + foglia + " nTensor: " + tensori.size();
+        return s;
     }
     
 }

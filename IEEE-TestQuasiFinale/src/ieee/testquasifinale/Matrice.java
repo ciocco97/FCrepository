@@ -28,13 +28,18 @@ public class Matrice {
             valori[col][row] = valore;
         else {
             int max = Integer.max(col, row);
+            max ++;
             int[][] newVal = new int[max][max];
-            setAtZero();
+            
+            for(int i = 0; i < max; i++)
+                for(int j = 0; j < DIM; j++)
+                    newVal[i][j] = 0;
             
             for(int i = 0; i < DIM; i++)
                 for(int j = 0; j < DIM; j++)
                     newVal[i][j] = valori[i][j];
             newVal[col][row] = valore;
+            DIM = max;
             valori = newVal;
         }
     }
@@ -101,5 +106,16 @@ public class Matrice {
             ritorno += pow(-1, i+j) * valori[i][j] * matriceTemp.calcolaDeterminante();
         }
         return ritorno;
+    }
+    
+    @Override
+    public String toString() {
+        String s = "";
+        for(int i = 0; i < DIM; i++) {
+            for(int j = 0; j < DIM; j++)
+                s += valori[i][j] + " ";
+            s += "\n";
+        }
+        return s.trim();
     }
 }

@@ -55,11 +55,26 @@ public class MyUtil {
                         if(nTemp == null)
                             nTemp = new NodoTensore();
                         else {
-                            nodi.add(nTemp);
+                            if(nodi.isEmpty()) {
+                                nTemp.setRoot(true);
+                                nodi.add(nTemp);
+                                root = nTemp;
+                            }
+                            else {
+                                int indice = -1;
+                                for(int c = nodi.size() - 1; c >= 0 && indice == -1; c--) {
+                                    if(nodi.get(c).isAperto())
+                                        indice = c;
+                                }
+                                if(indice != -1)
+                                    nodi.get(indice).addFiglio(nTemp);
+                                nodi.add(nTemp);
+                            }
                             nTemp = new NodoTensore();
+                            nTemp.apri();
                         }
                     }
-                    else if("Tensor".equals(reader.getLocalName()))
+                    else if("tensor".equals(reader.getLocalName()))
                         tTemp = new Tensore();
                     else if("matrix".equals(reader.getLocalName())) {
                         mTemp = new Matrice(1);
@@ -81,14 +96,26 @@ public class MyUtil {
                     else if("row".equals(reader.getLocalName())){
                         j = 0; i++;
                     } 
-                    else if("matrix".equals(reader.getLocalName()))
+                    else if("matrix".equals(reader.getLocalName())) {
                         tTemp.addMatrice(mTemp);
-                    else if("Tensor".equals(reader.getLocalName())) {
+                    }
+                    else if("tensor".equals(reader.getLocalName())) {
                         nTemp.addTensore(tTemp);
                     }
                     else if("TensorNode".equals(reader.getLocalName())) {
-                        for(int c = 0; c < nodi.size(); c++) {
-                            
+                        if(nTemp.isAperto()) {
+                            nTemp.chiudi();
+                            nTemp.setFoglia(true);
+                        }
+                        else {
+                            int indice = -1;
+                                for(int c = nodi.size() - 1; c >= 0 && indice == -1; c--) {
+                                    if(nodi.get(c).isAperto())
+                                        indice = c;
+                                }
+                                if(indice != -1) {
+                                    nodi.get(indice).chiudi();
+                                }
                         }
                     }
                     else if("TTree".equals(reader.getLocalName()))
@@ -98,6 +125,9 @@ public class MyUtil {
             }
             
             funzioneTroppoPowaPerComuniMortali(); 
+        }
+        for(int k = 0; k < nodi.size(); k++) {
+            System.out.println(nodi.get(k).toString());
         }
         return g;
     }

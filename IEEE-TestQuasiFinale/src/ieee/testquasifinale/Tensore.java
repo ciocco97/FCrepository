@@ -17,7 +17,6 @@ public class Tensore {
     
     public void addMatrice(Matrice m) {
         matrici.add(m);
-        calcolaIndice();
     }
     
 }

@@ -13,11 +13,13 @@ public class Tensore {
             for(Matrice m: matrici) indice += m.calcolaDeterminante();
         return indice;
     }
-    
+
+    public int getIndice() {
+        return indice;
+    }
     
     public void addMatrice(Matrice m) {
         matrici.add(m);
-        indice = calcolaIndice();
     }
     
 }

@@ -124,9 +124,7 @@ public class MyUtil {
             
             funzioneTroppoPowaPerComuniMortali(); 
         }
-        for(int k = 0; k < nodi.size(); k++) {
-            System.out.println(nodi.get(k).toString());
-        }
+        g.setNodi(nodi);
         return g;
     }
 

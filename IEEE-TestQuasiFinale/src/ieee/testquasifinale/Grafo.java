@@ -10,10 +10,18 @@ public class Grafo {
         nodi = new ArrayList<>();
     }
     
-    public boolean addNodo() {
-        boolean fatto = true;
-        
-        return fatto;
+    public void setNodi(ArrayList<NodoTensore> n) {
+        nodi = n;
+    }
+    
+    public int getIlCosoPiuGrande() {
+        int cosoPiuGrande = Integer.MIN_VALUE;
+        for(NodoTensore n: nodi) {
+            if(n.getUnitaTensore() > cosoPiuGrande)
+                cosoPiuGrande = n.getUnitaTensore();
+        }
+        if(cosoPiuGrande == Integer.MIN_VALUE) cosoPiuGrande = 0;
+        return cosoPiuGrande;
     }
     
     public NodoTensore trovaNodoDaNome(String nome) {

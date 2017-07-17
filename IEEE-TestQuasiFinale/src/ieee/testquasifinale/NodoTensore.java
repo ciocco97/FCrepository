@@ -33,6 +33,26 @@ public class NodoTensore {
     public void setTensori(ArrayList<Tensore> tensori) {
         this.tensori = tensori;
     }
+
+    public int getUnitaTensore() {
+        for(Tensore t: tensori)
+            t.calcolaIndice();
+        if(!radice) {
+            unitaTensore = Integer.MIN_VALUE;
+            for(Tensore t: tensori) {
+                if(t.getIndice() > unitaTensore)
+                    unitaTensore = t.getIndice();
+            }
+        } else {
+            unitaTensore = Integer.MAX_VALUE;
+            for(Tensore t: tensori) {
+                if(t.getIndice() < unitaTensore)
+                    unitaTensore = t.getIndice();
+            }           
+        }
+        if(unitaTensore == Integer.MAX_VALUE) unitaTensore = 0;
+        return unitaTensore;
+    }
     
     public void addTensore(Tensore t) {
         tensori.add(t);

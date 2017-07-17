@@ -3,33 +3,61 @@ package ieee.testquasifinale;
 import static java.lang.Math.pow;
 
 public class Matrice {
-    private int DIMENSIONE;
+    private int DIM;
     private int[][] valori;
+    
+    public Matrice(int DIMENSIONE) {
+        this.DIM = DIMENSIONE;
+        valori = new int[DIMENSIONE][DIMENSIONE];
+        setAtZero();
+    }
     
     public Matrice(int[][] valori) {
         this.valori = valori;
-        DIMENSIONE = valori.length;
+        DIM = valori.length;
+    }
+    
+    private void setAtZero() {
+        for(int i = 0; i < DIM; i++)
+            for(int j = 0; j < DIM; j++)
+                valori[i][j] = 0;
+    }
+    
+    public void addVal(int valore, int col, int row) {
+        if(col < DIM && row < DIM)
+            valori[col][row] = valore;
+        else {
+            int max = Integer.max(col, row);
+            int[][] newVal = new int[max][max];
+            setAtZero();
+            
+            for(int i = 0; i < DIM; i++)
+                for(int j = 0; j < DIM; j++)
+                    newVal[i][j] = valori[i][j];
+            newVal[col][row] = valore;
+            valori = newVal;
+        }
     }
     
     public int calcolaDeterminante() {
         int determinante = 0;
-        if(DIMENSIONE != valori[0].length) {
+        if(DIM != valori[0].length) {
             System.err.println("Il determinante non può essere calcolato");
         } else {
-            if(DIMENSIONE < 4) determinante = sarrus();
+            if(DIM < 4) determinante = sarrus();
             else determinante = laplace();
         }
         return determinante;
     }
     
     public Matrice rimuoviRigaColonna(int riga, int colonna) {
-        int[][] nuoviValori = new int[DIMENSIONE][DIMENSIONE];
+        int[][] nuoviValori = new int[DIM][DIM];
         boolean rigaTrovata = false;
         boolean colonnaTrovata = false;
-        for(int i = 0; i < DIMENSIONE - 1; i++) {
+        for(int i = 0; i < DIM - 1; i++) {
             if(i == riga) { rigaTrovata = true; i++; }
             colonnaTrovata = false;
-            for(int j = 0; j < DIMENSIONE - 1; j++) {
+            for(int j = 0; j < DIM - 1; j++) {
                 if(j == colonna) { colonnaTrovata = true; j++; }
                 if(colonnaTrovata && rigaTrovata)
                     nuoviValori[i - 1][j - 1] = valori[i][j];
@@ -46,7 +74,7 @@ public class Matrice {
     
     public int sarrus() {
         int ritorno = 0;
-        switch (DIMENSIONE) {
+        switch (DIM) {
             case 1:
                 ritorno = valori[0][0];
                 break;
@@ -68,7 +96,7 @@ public class Matrice {
     
     public int laplace() {
         int ritorno = 0;
-        for(int i = 0, j = 0; i < DIMENSIONE; i++) {
+        for(int i = 0, j = 0; i < DIM; i++) {
             Matrice matriceTemp = this.rimuoviRigaColonna(i, j);
             ritorno += pow(-1, i+j) * valori[i][j] * matriceTemp.calcolaDeterminante();
         }

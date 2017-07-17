@@ -13,6 +13,10 @@ public class NodoTensore {
     private boolean aperto;
 
     public NodoTensore() {
+        tensori = new ArrayList<>();
+        indiciTensori = new ArrayList<>();
+        figli = new ArrayList<>();
+        aperto = false;
     }
 
     public NodoTensore(boolean radice, boolean foglia, String nome, ArrayList<Tensore> tensori, ArrayList<Integer> indiciTensori, int unitaTensore, ArrayList<NodoTensore> figli, boolean aperto) {
@@ -26,10 +30,24 @@ public class NodoTensore {
         this.aperto = aperto;
     }
     
-    
+    public void addTensore(Tensore t) {
+        
+    }
     
     public String getNome() {
         return nome;
+    }
+    
+    public void apri() {
+        aperto = true;
+    }
+    
+    public void chiudi() {
+        aperto = false;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     
 }

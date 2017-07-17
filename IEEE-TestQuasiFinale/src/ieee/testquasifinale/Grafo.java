@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class Grafo {
     private ArrayList<NodoTensore> nodi;
     private String radice;
+
+    public Grafo() {
+        nodi = new ArrayList<>();
+    }
     
     public boolean addNodo() {
         boolean fatto = true;

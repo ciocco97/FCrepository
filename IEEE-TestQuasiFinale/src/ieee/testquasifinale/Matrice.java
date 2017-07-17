@@ -56,22 +56,27 @@ public class Matrice {
     }
     
     public Matrice rimuoviRigaColonna(int riga, int colonna) {
-        int[][] nuoviValori = new int[DIM][DIM];
+        if(DIM == 1) System.err.println("Impossibile rimuovere riga e colonna");
+        int[][] nuoviValori = new int[DIM - 1][DIM - 1];
+        
         boolean rigaTrovata = false;
-        boolean colonnaTrovata = false;
-        for(int i = 0; i < DIM - 1; i++) {
+        boolean colonnaTrovata;
+        for(int i = 0; i < DIM; i++) {
             if(i == riga) { rigaTrovata = true; i++; }
             colonnaTrovata = false;
-            for(int j = 0; j < DIM - 1; j++) {
+            for(int j = 0; j < DIM; j++) {
                 if(j == colonna) { colonnaTrovata = true; j++; }
-                if(colonnaTrovata && rigaTrovata)
-                    nuoviValori[i - 1][j - 1] = valori[i][j];
-                else if(rigaTrovata)
-                    nuoviValori[i - 1][j] = valori[i][j];
-                else if(colonnaTrovata)
-                    nuoviValori[i][j - 1] = valori[i][j];
-                else
-                    nuoviValori[i][j] = valori[i][j];
+                if(j < DIM && i < DIM) {
+                    if(colonnaTrovata && rigaTrovata){
+                        nuoviValori[i - 1][j - 1] = valori[i][j];
+                    }
+                    else if(rigaTrovata)
+                        nuoviValori[i - 1][j] = valori[i][j];
+                    else if(colonnaTrovata)
+                        nuoviValori[i][j - 1] = valori[i][j];
+                    else
+                        nuoviValori[i][j] = valori[i][j];
+                }
             }
         }
         return new Matrice(nuoviValori);
@@ -84,7 +89,7 @@ public class Matrice {
                 ritorno = valori[0][0];
                 break;
             case 2:
-                ritorno = (valori[0][0] + valori[1][1]) * (valori[0][1] + valori[1][0]);
+                ritorno = (valori[0][0] * valori[1][1]) + (valori[0][1] * valori[1][0]);
                 break;
             case 3:
                 ritorno = 

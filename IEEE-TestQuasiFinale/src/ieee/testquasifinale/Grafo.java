@@ -1,6 +1,7 @@
 package ieee.testquasifinale;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Grafo {
     private ArrayList<NodoTensore> nodi;
@@ -14,8 +15,16 @@ public class Grafo {
         nodi = n;
     }
     
-    public int getIlCosoPiuGrande() {
-        int cosoPiuGrande = Integer.MIN_VALUE;
+    public ArrayList<Matrice> prendiMatriciAcasoooo() {
+        Random r = new Random();
+        int i = r.nextInt(nodi.size());
+        ArrayList<Tensore> ts = nodi.get(i).getTensori();
+        i = r.nextInt(ts.size());
+        return ts.get(i).getMatrici();
+    }
+    
+    public double getIlCosoPiuGrande() {
+        double cosoPiuGrande = Integer.MIN_VALUE;
         for(NodoTensore n: nodi) {
             if(n.getUnitaTensore() > cosoPiuGrande)
                 cosoPiuGrande = n.getUnitaTensore();

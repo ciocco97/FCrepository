@@ -4,17 +4,21 @@ import java.util.ArrayList;
 
 public class Tensore {
     private ArrayList<Matrice> matrici;
-    private int indice;
+    private double indice;
     
     public Tensore() { matrici = new ArrayList<>(); }
     
-    public int calcolaIndice() {
+    public double calcolaIndice() {
         indice = 0;
             for(Matrice m: matrici) indice += m.calcolaDeterminante();
         return indice;
     }
 
-    public int getIndice() {
+    public ArrayList<Matrice> getMatrici() {
+        return matrici;
+    }
+
+    public double getIndice() {
         return indice;
     }
     

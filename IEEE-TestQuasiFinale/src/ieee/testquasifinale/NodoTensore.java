@@ -8,7 +8,7 @@ public class NodoTensore {
     private String nome;
     private ArrayList<Tensore> tensori;
     private ArrayList<Integer> indiciTensori;
-    private int unitaTensore;
+    private double unitaTensore;
     private ArrayList<NodoTensore> figli;
     private boolean aperto;
 
@@ -34,7 +34,11 @@ public class NodoTensore {
         this.tensori = tensori;
     }
 
-    public int getUnitaTensore() {
+    public ArrayList<Tensore> getTensori() {
+        return tensori;
+    }
+
+    public double getUnitaTensore() {
         for(Tensore t: tensori)
             t.calcolaIndice();
         if(!radice) {

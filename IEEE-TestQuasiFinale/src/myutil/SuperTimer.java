@@ -3,12 +3,12 @@ package myutil;
 public class SuperTimer {
     private long inizio;
 
-    public SuperTimer(long inizio) {
-        this.inizio = System.currentTimeMillis();
+    public SuperTimer() {
+        this.inizio = System.nanoTime();
     }
 
     public long getTempuscolo() {
-        return System.currentTimeMillis() - inizio;
+        return System.nanoTime() - inizio;
     }
     
     
